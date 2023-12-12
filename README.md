@@ -2,10 +2,10 @@
 ## Goal
 The goal of this exercise is to create a simple REST API that allows to fetch information about purchases made by customers.
 The API should allow to:
-    * Calculate the most frequent age range of customers that made purchases in a given date range.
-    * Fetch the details of a purchase by the following criterias:
-        * User who made the purchase
-        * Total amount of the purchase
+- Calculate the most frequent age range of customers that made purchases in a given date range.
+- Fetch the details of a purchase by the following criterias:
+    - User who made the purchase
+    - Total amount of the purchase
 
 # Decisions
 ## Hexagonal Architecture and DDD
