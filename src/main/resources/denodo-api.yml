@@ -1,0 +1,163 @@
+openapi: 3.0.3
+info:
+  title: Denodo Exercise API
+  description: Denodo Exercise API
+  version: 1.0.0
+tags:
+  - name: purchases
+    description:  Purchases API
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  /v1/moreFrequentAgeRangePurchases:
+    get:
+      tags:
+        - purchases
+      operationId: getMoreFrequentAgeRange
+      description: Get the more frequent age range for a given time range
+      parameters:
+        - $ref: "#/components/parameters/from"
+        - $ref: "#/components/parameters/to"
+      responses:
+        200:
+          description: The more frequent age range for a given time range
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AgeRange"
+        default:
+          description: Error during the request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/purchases:
+    get:
+      tags:
+        - purchases
+      operationId: getPurchases
+      description: Get paginated list of purchases
+      parameters:
+          - $ref: "#/components/parameters/userId"
+          - $ref: "#/components/parameters/totalAmount"
+          - $ref: "#/components/parameters/pageable"
+      responses:
+        200:
+          description: The more frequent age range for a given time range
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Purchases"
+        default:
+          description: Error during the request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  parameters:
+    pageable:
+        name: pageable
+        in: query
+        description: Pageable parameters
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: object
+          properties:
+            page:
+              type: integer
+              example: 0
+              default: 0
+            size:
+              type: integer
+              example: 10
+              default: 20
+    userId:
+      name: userId
+      in: query
+      description: User identifier
+      required: false
+      schema:
+        type: integer
+    totalAmount:
+      name: total
+      in: query
+      description: Total of the purchase
+      required: false
+      schema:
+        type: number
+    from:
+      name: from
+      in: query
+      description: Start of the time range
+      required: true
+      schema:
+        type: string
+        format: date-time
+        example: '2020-01-01T00:00:00'
+    to:
+        name: to
+        in: query
+        description: End of the time range
+        required: true
+        schema:
+            type: string
+            format: date-time
+            example: '2020-01-05T00:00:00'
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: 'Product Not Found'
+    AgeRange:
+      type: object
+      readOnly: true
+      required:
+        - fromAge
+        - toAge
+      properties:
+        fromAge:
+          description: Start of the age range
+          type: integer
+          example: 20
+        toAge:
+          description: End of the age range
+          type: integer
+          example: 30
+    Purchases:
+      type: array
+      items:
+        $ref: "#/components/schemas/Purchase"
+    Purchase:
+      type: object
+      required:
+        - id
+        - userId
+        - productId
+        - total
+        - date
+      properties:
+        id:
+          description: Purchase identifier
+          type: integer
+          example: 1
+        userId:
+          description: User identifier
+          type: integer
+          example: 1
+        total:
+          description: Total of the purchase
+          type: number
+          example: 100.0
+        date:
+          description: Date of the purchase
+          type: string
+          format: date-time
+          example: '2020-01-01T00:00:00'
