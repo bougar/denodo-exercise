@@ -1,0 +1,11 @@
+logging:
+  level:
+    root: INFO
+spring:
+  application:
+    name: denodo-exercise
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    url: /denodo-api.yml

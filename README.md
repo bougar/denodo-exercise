@@ -21,6 +21,12 @@ use DDD in this case is the lack of domain knowledge. In my opinion, the most im
 strategic part. Keeping in touch with the domain expert and build a conceptual model to be represented in
 our code. The tactical part is also important, but it does not make sense without the strategic one.
 
+## API First
+I have decided to use API First approach to design the API. This approach allows to design the API before
+implementing it. This approach is very useful because we can share the API contract with the client and
+get feedback before implementing it. Another advantage of this approach is that the documentation is
+always up-to-date.
+
 ## Github
 
 I have decided to use GitHub as the version control system for this project. I would like to
