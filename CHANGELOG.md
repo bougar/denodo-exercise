@@ -10,3 +10,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - OpenAPI specification contract
+- Add basic skeleton for the project
+- Add server stub for the project
