@@ -5,7 +5,7 @@ info:
   version: 1.0.0
 tags:
   - name: purchases
-    description:  Purchases API
+    description: Purchases API
 servers:
   - url: 'http://localhost:8080'
 paths:
@@ -38,16 +38,16 @@ paths:
       operationId: getPurchases
       description: Get paginated list of purchases
       parameters:
-          - $ref: "#/components/parameters/userId"
-          - $ref: "#/components/parameters/totalAmount"
-          - $ref: "#/components/parameters/pageable"
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/totalAmount"
+        - $ref: "#/components/parameters/pageable"
       responses:
         200:
           description: The more frequent age range for a given time range
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Purchases"
+                $ref: "#/components/schemas/PaginatedPurchases"
         default:
           description: Error during the request
           content:
@@ -57,23 +57,23 @@ paths:
 components:
   parameters:
     pageable:
-        name: pageable
-        in: query
-        description: Pageable parameters
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: object
-          properties:
-            page:
-              type: integer
-              example: 0
-              default: 0
-            size:
-              type: integer
-              example: 10
-              default: 20
+      name: pageable
+      in: query
+      description: Pageable parameters
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: object
+        properties:
+          page:
+            type: integer
+            example: 0
+            default: 0
+          size:
+            type: integer
+            example: 10
+            default: 20
     userId:
       name: userId
       in: query
@@ -98,15 +98,37 @@ components:
         format: date-time
         example: '2020-01-01T00:00:00'
     to:
-        name: to
-        in: query
-        description: End of the time range
-        required: true
-        schema:
-            type: string
-            format: date-time
-            example: '2020-01-05T00:00:00'
+      name: to
+      in: query
+      description: End of the time range
+      required: true
+      schema:
+        type: string
+        format: date-time
+        example: '2020-01-05T00:00:00'
   schemas:
+    Paginated:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 0
+        size:
+          type: integer
+          example: 10
+        totalElements:
+          type: integer
+          example: 100
+        totalPages:
+          type: integer
+          example: 10
+    PaginatedPurchases:
+      allOf:
+        - $ref: "#/components/schemas/Paginated"
+        - type: object
+          properties:
+            content:
+              $ref: "#/components/schemas/Purchases"
     Error:
       type: object
       properties:
@@ -135,11 +157,25 @@ components:
       type: array
       items:
         $ref: "#/components/schemas/Purchase"
+    User:
+      type: object
+      readOnly: true
+      required:
+        - id
+        - age
+      properties:
+        id:
+          description: User identifier
+          type: integer
+          example: 1
+        age:
+          description: User age
+          type: integer
+          example: 20
     Purchase:
       type: object
       required:
         - id
-        - userId
         - productId
         - total
         - date
@@ -148,10 +184,9 @@ components:
           description: Purchase identifier
           type: integer
           example: 1
-        userId:
-          description: User identifier
-          type: integer
-          example: 1
+        user:
+          description: User that made the purchase
+          $ref: "#/components/schemas/User"
         total:
           description: Total of the purchase
           type: number
