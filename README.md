@@ -27,6 +27,16 @@ implementing it. This approach is very useful because we can share the API contr
 get feedback before implementing it. Another advantage of this approach is that the documentation is
 always up-to-date.
 
+## Database Design
+I have decided to use a relational database to store the data. I have also decided to merge the `PURCHASE` date and time
+into a single column. In this way queries can be simplified and also indexes can be used to improve performance.
+
+## Development Database
+In order to make development easier, I have decided to use H2 database. This database is an in-memory database
+that can be used during development. This database is not suitable for production environments, but it is
+very useful during development. The database is configured to be created and populated with some data at
+startup. This data is defined in `src/main/resources/schema-h2.sql` file.
+
 ## Github
 
 I have decided to use GitHub as the version control system for this project. I would like to
