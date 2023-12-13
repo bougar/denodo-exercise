@@ -54,4 +54,27 @@ public class DenodoExerciseIT {
         .andExpect(jsonPath("$.totalElements").value(2))
         .andExpect(jsonPath("$.totalPages").value(1));
   }
+
+  @Test
+  void test_get_frequency() throws Exception {
+    MockHttpServletRequestBuilder requestBuilder = get("/v1/moreFrequentAgeRangePurchases")
+            .queryParam("from", "2023-11-21T19:00:00")
+            .queryParam("to", "2023-11-21T20:00:00");
+    mockMvc
+            .perform(requestBuilder)
+            .andExpect(status().is2xxSuccessful())
+            .andExpect(jsonPath("$.range").value("AGE_RANGE_0_18"));
+
+  }
+
+  @Test
+  void test_get_frequency_with_other_parameters() throws Exception {
+    MockHttpServletRequestBuilder requestBuilder = get("/v1/moreFrequentAgeRangePurchases")
+            .queryParam("from", "2020-11-21T19:00:00")
+            .queryParam("to", "2025-11-21T20:00:00");
+    mockMvc
+            .perform(requestBuilder)
+            .andExpect(status().is2xxSuccessful())
+            .andExpect(jsonPath("$.range").value("AGE_RANGE_35_44"));
+  }
 }

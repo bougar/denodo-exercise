@@ -1,14 +1,18 @@
 package es.lareira.denodo.infraestructure.db.relational;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import es.lareira.denodo.application.domain.model.purchase.Purchase;
+import es.lareira.denodo.application.domain.model.requests.DateRangeRequest;
 import es.lareira.denodo.application.domain.model.requests.PurchaseDetailRequest;
+import es.lareira.denodo.config.QueryConfig;
 import es.lareira.denodo.infraestructure.db.relational.entity.PurchaseEntity;
 import es.lareira.denodo.infraestructure.db.relational.jpa.JpaPurchaseRepository;
 import es.lareira.denodo.infraestructure.db.relational.mapper.PurchaseMapper;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +28,7 @@ import org.springframework.data.domain.Pageable;
 class PurchaseRepositoryAdapterTest {
   @Mock private JpaPurchaseRepository jpaPurchaseRepository;
   @Mock private PurchaseMapper purchaseMapper;
+  @Mock private QueryConfig queryConfig;
   @InjectMocks private PurchaseRepositoryAdapter purchaseRepositoryAdapter;
 
   @Test
@@ -70,5 +75,16 @@ class PurchaseRepositoryAdapterTest {
     assertFalse(result.isEmpty());
     assertEquals(2, result.getContent().get(0).getId());
     assertEquals(7, result.getContent().get(1).getId());
+  }
+
+  @Test
+  void when_get_buyers_ages_then_call_repository() {
+    DateRangeRequest dateRangeRequest = DateRangeRequest.builder()
+            .startDate(LocalDateTime.now())
+            .endDate(LocalDateTime.now())
+            .build();
+    when(queryConfig.getMinimumFrequencyTotalAmount()).thenReturn(100);
+    purchaseRepositoryAdapter.getBuyersAges(dateRangeRequest);
+    verify(jpaPurchaseRepository).getBuyersAges(dateRangeRequest, 100);
   }
 }

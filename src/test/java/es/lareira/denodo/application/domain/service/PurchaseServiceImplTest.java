@@ -1,11 +1,17 @@
 package es.lareira.denodo.application.domain.service;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import es.lareira.denodo.application.domain.model.exceptions.NoPurchasesFoundException;
+import es.lareira.denodo.application.domain.model.purchase.AgeRange;
 import es.lareira.denodo.application.domain.model.purchase.Purchase;
+import es.lareira.denodo.application.domain.model.requests.DateRangeRequest;
 import es.lareira.denodo.application.domain.model.requests.PurchaseDetailRequest;
 import es.lareira.denodo.application.ports.output.repository.PurchaseRepository;
+
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -60,5 +66,22 @@ class PurchaseServiceImplTest {
     Page<Purchase> result = purchaseServiceImpl.getPurchasesDetails(purchaseDetailRequest, pageable);
     assertNotNull(result);
     assertTrue(result.isEmpty());
+  }
+
+  @Test
+  void when_getBuyersAgeRange_with_no_ages_on_range_then_throws_exception() {
+    when(purchaseRepository.getBuyersAges(any())).thenReturn(new ArrayList<>());
+    assertThrows(
+        NoPurchasesFoundException.class,
+        () -> purchaseServiceImpl.getBuyersAgeRange(DateRangeRequest.builder().build()),
+        "No buyers found on the given range");
+  }
+
+  @Test
+  void when_getBuyersAgeRange_then_Return_The_Appropiate_Range() {
+    when(purchaseRepository.getBuyersAges(any())).thenReturn(List.of(10, 10, 25, 64, 10, 10, 10 ,40));
+    assertEquals(AgeRange.AGE_RANGE_0_18, purchaseServiceImpl.getBuyersAgeRange(DateRangeRequest.builder().build()));
+    when(purchaseRepository.getBuyersAges(any())).thenReturn(List.of(27, 25, 25, 64, 28, 56, 25 ,40));
+    assertEquals(AgeRange.AGE_RANGE_25_34, purchaseServiceImpl.getBuyersAgeRange(DateRangeRequest.builder().build()));
   }
 }

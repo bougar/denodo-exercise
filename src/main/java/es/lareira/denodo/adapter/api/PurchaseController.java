@@ -1,7 +1,10 @@
 package es.lareira.denodo.adapter.api;
 
+import es.lareira.denodo.adapter.api.mapper.AgeMapper;
 import es.lareira.denodo.adapter.api.mapper.PurchaseDTOMapper;
+import es.lareira.denodo.application.domain.model.purchase.AgeRange;
 import es.lareira.denodo.application.domain.model.purchase.Purchase;
+import es.lareira.denodo.application.domain.model.requests.DateRangeRequest;
 import es.lareira.denodo.application.domain.model.requests.PurchaseDetailRequest;
 import es.lareira.denodo.application.ports.input.service.PurchaseService;
 import es.lareira.denodo.generated.api.PurchasesApi;
@@ -21,10 +24,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class PurchaseController implements PurchasesApi {
   private final PurchaseService purchaseService;
   private final PurchaseDTOMapper purchaseDTOMapper;
+  private final AgeMapper ageMapper;
 
   @Override
   public AgeRangeDTO getMoreFrequentAgeRange(LocalDateTime from, LocalDateTime to) {
-    throw new NotImplementedException("Not implemented yet");
+    DateRangeRequest dateRequest = DateRangeRequest.builder()
+            .startDate(from)
+            .endDate(to)
+            .build();
+    AgeRange buyersAgeRange = purchaseService.getBuyersAgeRange(dateRequest);
+    return ageMapper.toDto(buyersAgeRange);
   }
 
   @Override
