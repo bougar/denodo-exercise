@@ -142,17 +142,20 @@ components:
       type: object
       readOnly: true
       required:
-        - fromAge
-        - toAge
+        - range
       properties:
-        fromAge:
-          description: Start of the age range
-          type: integer
-          example: 20
-        toAge:
-          description: End of the age range
-          type: integer
-          example: 30
+        range:
+          description: Type of the age range
+          type: string
+          enum:
+            - AGE_RANGE_UNKNOWN
+            - AGE_RANGE_0_18
+            - AGE_RANGE_18_24
+            - AGE_RANGE_25_34
+            - AGE_RANGE_35_44
+            - AGE_RANGE_45_54
+            - AGE_RANGE_55_64
+            - AGE_RANGE_65_PLUS
     Purchases:
       type: array
       items:
@@ -185,7 +188,6 @@ components:
           type: integer
           example: 1
         user:
-          description: User that made the purchase
           $ref: "#/components/schemas/User"
         total:
           description: Total of the purchase

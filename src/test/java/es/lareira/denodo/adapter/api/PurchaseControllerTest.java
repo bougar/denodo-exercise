@@ -4,12 +4,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+import es.lareira.denodo.adapter.api.mapper.AgeMapper;
 import es.lareira.denodo.adapter.api.mapper.PurchaseDTOMapper;
+import es.lareira.denodo.application.domain.model.purchase.AgeRange;
 import es.lareira.denodo.application.domain.model.requests.PurchaseDetailRequest;
 import es.lareira.denodo.application.ports.input.service.PurchaseService;
+import es.lareira.denodo.generated.model.AgeRangeDTO;
 import es.lareira.denodo.generated.model.GetPurchasesPageableParameterDTO;
 import es.lareira.denodo.generated.model.PaginatedPurchasesDTO;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -23,6 +28,7 @@ import org.springframework.data.domain.Pageable;
 class PurchaseControllerTest {
   @Mock private PurchaseService purchaseService;
   @Mock private PurchaseDTOMapper purchaseDTOMapper;
+  @Mock private AgeMapper ageMapper;
   @InjectMocks
   private PurchaseController purchaseController;
 
@@ -65,6 +71,15 @@ class PurchaseControllerTest {
     assertEquals(1, requestCaptor.getValue().getTotalAmount());
     assertEquals(7, pageableCaptor.getValue().getPageNumber());
     assertEquals(20, pageableCaptor.getValue().getPageSize());
+    assertNotNull(result);
+  }
+
+  @Test
+  void when_get_more_frequent_age_range_then_return_age_range() {
+    AgeRange ageRange = AgeRange.AGE_RANGE_35_44;
+    when(purchaseService.getBuyersAgeRange(any())).thenReturn(ageRange);
+    when(ageMapper.toDto(ageRange)).thenReturn(new AgeRangeDTO());
+    AgeRangeDTO result = purchaseController.getMoreFrequentAgeRange(LocalDateTime.MIN, LocalDateTime.MAX);
     assertNotNull(result);
   }
 }
