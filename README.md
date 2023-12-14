@@ -27,6 +27,12 @@ implementing it. This approach is very useful because we can share the API contr
 get feedback before implementing it. Another advantage of this approach is that the documentation is
 always up-to-date.
 
+## Mapping Fields
+Hexagonal architecture allows to decouple the business logic from the infrastructure. However, it is necessary
+to map the fields from the domain model to the database model and vice versa. I have decided to use `mapstruct`
+library to do this mapping. This library allows to generate the mapping code at compile time. This approach
+allows to keep the code clean and avoid boiler-plate code.
+
 ## Database Design
 I have decided to use a relational database to store the data. I have also decided to merge the `PURCHASE` date and time
 into a single column. In this way queries can be simplified and also indexes can be used to improve performance.
@@ -137,6 +143,15 @@ mvn clean verify jacoco:report
 
 Results can be found in `target/site/jacoco/index.html` file. I also have configured the CI pipeline to
 publish a message on the PR with the code coverage report.
+
+
+## Request Trace
+In order to help developers to trace requests through the system, I have decided to make use of `micrometer`
+library to generate a unique trace id for each request. This trace id will be included in the response headers:
+* `X-B3-TraceId`
+* `X-B3-SpanId`
+  This traces will help developers to trace requests through a distributed system. It is also possible to use
+  some tools like [Zipkin](https://zipkin.io/) to visualize the traces.
 
 # Testing the Application
 ## Run the application
