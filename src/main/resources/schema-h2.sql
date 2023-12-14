@@ -50,3 +50,5 @@ VALUES (1, 52),
        (3, 99),
        (4, 86),
        (5, 79);
+
+CREATE INDEX idx_purchase_date ON Purchases(PURCHASE_DATE);

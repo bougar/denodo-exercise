@@ -37,11 +37,17 @@ allows to keep the code clean and avoid boiler-plate code.
 I have decided to use a relational database to store the data. I have also decided to merge the `PURCHASE` date and time
 into a single column. In this way queries can be simplified and also indexes can be used to improve performance.
 
+In order to improve performance I also have decided to add an index on `PURCHASE_DATE` column. This index will be used
+to improve the performance of the query that calculates the most frequent age range of customers that made purchases.
+
 ## Development Database
 In order to make development easier, I have decided to use H2 database. This database is an in-memory database
 that can be used during development. This database is not suitable for production environments, but it is
 very useful during development. The database is configured to be created and populated with some data at
 startup. This data is defined in `src/main/resources/schema-h2.sql` file.
+
+In a real world scenario, the embedded database should be configured in a different spring profile. This is not
+done in this project for simplicity.
 
 ## Github
 
