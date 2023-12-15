@@ -241,8 +241,10 @@ In order to help developers to trace requests through the system, I have decided
 library to generate a unique trace id for each request. This trace id will be included in the response headers:
 * `X-B3-TraceId`
 * `X-B3-SpanId`
-  This traces will help developers to trace requests through a distributed system. It is also possible to use
-  some tools like [Zipkin](https://zipkin.io/) to visualize the traces.
+This traces will help developers to trace requests through a distributed system. It is also possible to use
+some tools like [Zipkin](https://zipkin.io/) to visualize the traces.
+
+![b3-trace-example](docs/images/b3-headers.png)
 
 # Testing the Application
 ## Run the application
