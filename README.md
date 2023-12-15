@@ -7,6 +7,11 @@ The API should allow to:
     - User who made the purchase
     - Total amount of the purchase
 
+# Variables
+- `query.minimumFrequencyTotalAmount`: Minimum total amount of a purchase to be considered for the most frequent age range calculation.
+Default value is `100`.
+
+
 # Decisions
 ## Hexagonal Architecture and DDD
 The project is designed with Hexagonal Architecture in mind. This architecture allows to decouple
@@ -210,6 +215,10 @@ base:
 ```shell
 mvn test-compile org.pitest:pitest-maven:mutationCoverage
 ```
+
+A report will be generated in `target/pit-reports/index.html` file.
+
+![mutation-testing-example](docs/images/pi-test-with-reported.png)
 
 NOTE: Mutation testing will be skipped on model classes. Many of those classes contains boiler-plate
 code that is normally not tested.

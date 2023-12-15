@@ -19,6 +19,27 @@
     <build>
         <plugins>
             <plugin>
+                <artifactId>pitest-maven</artifactId>
+                <configuration>
+                    <excludedClasses>
+                        <param>es.lareira.denodo.generated.*</param>
+                        <param>**.mapper.*</param>
+                        <param>**.model.*</param>
+                        <param>**.entity.*</param>
+                        <param>es.lareira.denodo.config.*</param>
+                    </excludedClasses>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <groupId>org.pitest</groupId>
+                        <version>1.1.1</version>
+                    </dependency>
+                </dependencies>
+                <groupId>org.pitest</groupId>
+                <version>${pitest.version}</version>
+            </plugin>
+            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
@@ -50,8 +71,6 @@
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>${sonar.version}</version>
-                <configuration>
-                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -254,6 +273,7 @@
             **/entity/*,
             **/es/lareira/denodo/Application**
         </sonar.coverage.exclusions>
+        <pitest.version>1.15.1</pitest.version>
     </properties>
 
 </project>
