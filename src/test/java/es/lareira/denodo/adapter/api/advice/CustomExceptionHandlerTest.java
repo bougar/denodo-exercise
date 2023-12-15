@@ -21,6 +21,7 @@ class CustomExceptionHandlerTest {
         ResponseEntity<ErrorDTO> response = customExceptionHandler.handleNoPurchasesFoundException(new NoPurchasesFoundException());
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertNotNull(response.getBody());
+        assertNotNull(response.getBody().getMessage());
         assertEquals(404, response.getBody().getCode());
     }
 
@@ -30,6 +31,7 @@ class CustomExceptionHandlerTest {
         customExceptionHandler.handleConstraintViolationException(new ConstraintViolationException("message", null));
         assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, response.getStatusCode());
         assertNotNull(response.getBody());
+        assertNotNull(response.getBody().getMessage());
         assertEquals(422, response.getBody().getCode());
     }
 
@@ -38,6 +40,7 @@ class CustomExceptionHandlerTest {
         ResponseEntity<ErrorDTO> response = customExceptionHandler.handleUnknownException(new Exception());
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertNotNull(response.getBody());
+        assertNotNull(response.getBody().getMessage());
         assertEquals(500, response.getBody().getCode());
     }
 }
