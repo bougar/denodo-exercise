@@ -16,3 +16,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add H2 database support to make development easier
 - Add get more frequent age range feature
 - Add feature to get purchase details
+- Add sonar plugin configuration

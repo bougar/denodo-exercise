@@ -64,6 +64,15 @@ some protections for the `main` branch, but it cannot be donne with a free accou
 Despite the fact that enforcement rules cannot be applied to `main` branch, I will try to enforce
 them by myself.
 
+## CI Pipeline
+I have decided to use GitHub Actions as the CI tool for this project. I have configured a simple CI pipeline that runs
+tests and generates a code coverage report when a PR is created. I have also configured Github to not allow merging
+a PR if the pipeline is not green.
+![github-pr-running](docs/images/github-pr-running.png)
+![github-pr-success](docs/images/github-pr-success.png)
+
+
+
 ## Docker
 I have added a dockerfile to the project in order to create a docker image. You can build the image with
 the following command:
@@ -139,7 +148,7 @@ volumes:
 ```
 
 Example of sonar output:
-![sonar-run-example](docs/sonar.png)
+![sonar-run-example](docs/images/sonar.png)
 
 Ideally sonar should be integrated with the CI pipeline. However, I have not done it in this project for the lack of time.
 
