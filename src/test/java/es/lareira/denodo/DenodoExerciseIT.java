@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-public class DenodoExerciseIT {
+class DenodoExerciseIT {
   @Autowired private MockMvc mockMvc;
 
   @Test
@@ -57,24 +57,25 @@ public class DenodoExerciseIT {
 
   @Test
   void test_get_frequency() throws Exception {
-    MockHttpServletRequestBuilder requestBuilder = get("/v1/moreFrequentAgeRangePurchases")
+    MockHttpServletRequestBuilder requestBuilder =
+        get("/v1/moreFrequentAgeRangePurchases")
             .queryParam("from", "2023-11-21T19:00:00")
             .queryParam("to", "2023-11-21T20:00:00");
     mockMvc
-            .perform(requestBuilder)
-            .andExpect(status().is2xxSuccessful())
-            .andExpect(jsonPath("$.range").value("AGE_RANGE_0_18"));
-
+        .perform(requestBuilder)
+        .andExpect(status().is2xxSuccessful())
+        .andExpect(jsonPath("$.range").value("AGE_RANGE_0_18"));
   }
 
   @Test
   void test_get_frequency_with_other_parameters() throws Exception {
-    MockHttpServletRequestBuilder requestBuilder = get("/v1/moreFrequentAgeRangePurchases")
+    MockHttpServletRequestBuilder requestBuilder =
+        get("/v1/moreFrequentAgeRangePurchases")
             .queryParam("from", "2020-11-21T19:00:00")
             .queryParam("to", "2025-11-21T20:00:00");
     mockMvc
-            .perform(requestBuilder)
-            .andExpect(status().is2xxSuccessful())
-            .andExpect(jsonPath("$.range").value("AGE_RANGE_35_44"));
+        .perform(requestBuilder)
+        .andExpect(status().is2xxSuccessful())
+        .andExpect(jsonPath("$.range").value("AGE_RANGE_35_44"));
   }
 }

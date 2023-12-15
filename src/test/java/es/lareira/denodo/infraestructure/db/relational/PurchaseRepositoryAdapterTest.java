@@ -10,8 +10,6 @@ import es.lareira.denodo.config.QueryConfig;
 import es.lareira.denodo.infraestructure.db.relational.entity.PurchaseEntity;
 import es.lareira.denodo.infraestructure.db.relational.jpa.JpaPurchaseRepository;
 import es.lareira.denodo.infraestructure.db.relational.mapper.PurchaseMapper;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.Test;

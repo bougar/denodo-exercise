@@ -1,5 +1,7 @@
 package es.lareira.denodo.adapter.api.advice;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import es.lareira.denodo.application.domain.model.exceptions.NoPurchasesFoundException;
 import es.lareira.denodo.generated.model.ErrorDTO;
 import jakarta.validation.ConstraintViolationException;
@@ -9,8 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class CustomExceptionHandlerTest {

@@ -10,7 +10,6 @@ import es.lareira.denodo.application.domain.model.purchase.Purchase;
 import es.lareira.denodo.application.domain.model.requests.DateRangeRequest;
 import es.lareira.denodo.application.domain.model.requests.PurchaseDetailRequest;
 import es.lareira.denodo.application.ports.output.repository.PurchaseRepository;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -71,9 +70,10 @@ class PurchaseServiceImplTest {
   @Test
   void when_getBuyersAgeRange_with_no_ages_on_range_then_throws_exception() {
     when(purchaseRepository.getBuyersAges(any())).thenReturn(new ArrayList<>());
+    DateRangeRequest request = DateRangeRequest.builder().build();
     assertThrows(
         NoPurchasesFoundException.class,
-        () -> purchaseServiceImpl.getBuyersAgeRange(DateRangeRequest.builder().build()),
+        () -> purchaseServiceImpl.getBuyersAgeRange(request),
         "No buyers found on the given range");
   }
 

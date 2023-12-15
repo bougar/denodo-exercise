@@ -39,7 +39,7 @@ VALUES (201, 104, '2023-11-22 10:36:00', 78),
 -- Create Prices table
 CREATE TABLE Prices
 (
-    ITEM_ID INT PRIMARY KEY,
+    ITEM_ID    INT PRIMARY KEY,
     ITEM_PRICE DECIMAL(10, 2)
 );
 
@@ -51,4 +51,4 @@ VALUES (1, 52),
        (4, 86),
        (5, 79);
 
-CREATE INDEX idx_purchase_date ON Purchases(PURCHASE_DATE);
+CREATE INDEX idx_purchase_date ON Purchases (PURCHASE_DATE);

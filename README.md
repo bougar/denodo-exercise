@@ -64,6 +64,15 @@ some protections for the `main` branch, but it cannot be donne with a free accou
 Despite the fact that enforcement rules cannot be applied to `main` branch, I will try to enforce
 them by myself.
 
+## CI Pipeline
+I have decided to use GitHub Actions as the CI tool for this project. I have configured a simple CI pipeline that runs
+tests and generates a code coverage report when a PR is created. I have also configured Github to not allow merging
+a PR if the pipeline is not green.
+![github-pr-running](docs/images/github-pr-running.png)
+![github-pr-success](docs/images/github-pr-success.png)
+
+
+
 ## Docker
 I have added a dockerfile to the project in order to create a docker image. You can build the image with
 the following command:
@@ -79,6 +88,73 @@ docker run -p 8080:8080 inditex-exercise
 
 With this command the application will be available on `http://localhost:8080`. You can access
 the swagger-ui documentation at `http://localhost:8080/swagger-ui/index.html`.
+
+## Sonar
+I have added a sonar configuration to the project. You can run sonar with the following command:
+
+```shell
+mvn clean verify sonar:sonar \
+  -Dsonar.projectKey=<sonar-project-key> \
+  -Dsonar.projectName=<sonar-project-name> \
+  -Dsonar.host.url=<sonar-url> \
+  -Dsonar.token=<sonar-token>
+```
+
+Take into account that you need a sonar server running in order to run this command. Docker can be used to set up a
+local sonar instance. The following docker-compose file can be used to set up a local sonar instance:
+
+```yaml
+version: '2'
+ 
+services:
+  sonarqube:
+    image: sonarqube
+    ports:
+      - "9000:9000"
+    networks:
+      - sonarnet
+    environment:
+      - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
+      - SONARQUBE_JDBC_USERNAME=sonar
+      - SONARQUBE_JDBC_PASSWORD=sonar
+    volumes:
+      - sonarqube_conf:/opt/sonarqube/conf
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
+      
+  db:
+    image: postgres
+    networks:
+      - sonarnet
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar
+    volumes:
+      - postgresql:/var/lib/postgresql
+      - postgresql_data:/var/lib/postgresql/data
+      
+networks:
+  sonarnet:
+    driver: bridge
+ 
+volumes:
+  sonarqube_conf:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_bundled-plugins:
+  postgresql:
+  postgresql_data:
+```
+
+Example of sonar output:
+![sonar-run-example](docs/images/sonar.png)
+
+Ideally sonar should be integrated with the CI pipeline. However, I have not done it in this project for the lack of time.
+
+### Alternatives
+Intellj IDEA has a sonar plugin that can be used to run sonar analysis. However, this plugin is slow and I would not
+recommend to use it for large projects.
 
 ## Health Check
 With Spring boot actuator a health endpoint is added to the application. This endpoint can be used

@@ -1,12 +1,9 @@
 package es.lareira.denodo.application.domain.model.requests;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
 import org.apache.commons.lang3.ObjectUtils;
-
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 @Builder
 @AllArgsConstructor

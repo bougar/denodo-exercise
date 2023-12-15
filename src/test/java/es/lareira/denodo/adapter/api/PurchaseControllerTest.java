@@ -14,7 +14,6 @@ import es.lareira.denodo.generated.model.GetPurchasesPageableParameterDTO;
 import es.lareira.denodo.generated.model.PaginatedPurchasesDTO;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;

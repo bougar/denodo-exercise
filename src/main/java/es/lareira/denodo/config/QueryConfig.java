@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Getter
 public class QueryConfig {
-    @Value("${query.minimumFrequencyTotalAmount:100}")
-    private Integer minimumFrequencyTotalAmount;
+  @Value("${query.minimumFrequencyTotalAmount:100}")
+  private Integer minimumFrequencyTotalAmount;
 }
