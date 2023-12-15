@@ -1,9 +1,8 @@
 package es.lareira.denodo.infraestructure.db.relational.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.time.LocalDateTime;
+import lombok.*;
 
 @Entity
 @Data

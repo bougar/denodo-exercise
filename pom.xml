@@ -50,6 +50,8 @@
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>${sonar.version}</version>
+                <configuration>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -244,6 +246,14 @@
         <maven-failsafe-plugin.version>3.1.2</maven-failsafe-plugin.version>
         <openapi-generator.version>6.6.0</openapi-generator.version>
         <lombok.version>1.18.30</lombok.version>
+        <sonar.coverage.exclusions>
+            **/generated/**,
+            **/mapper/**,
+            **/model/**,
+            **/config/**,
+            **/entity/*,
+            **/es/lareira/denodo/Application**
+        </sonar.coverage.exclusions>
     </properties>
 
 </project>

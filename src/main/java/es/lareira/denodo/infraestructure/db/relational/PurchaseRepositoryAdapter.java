@@ -31,6 +31,7 @@ public class PurchaseRepositoryAdapter implements PurchaseRepository {
 
   @Override
   public List<Integer> getBuyersAges(DateRangeRequest dateRangeRequest) {
-    return jpaPurchaseRepository.getBuyersAges(dateRangeRequest, queryConfig.getMinimumFrequencyTotalAmount());
+    return jpaPurchaseRepository.getBuyersAges(
+        dateRangeRequest, queryConfig.getMinimumFrequencyTotalAmount());
   }
 }

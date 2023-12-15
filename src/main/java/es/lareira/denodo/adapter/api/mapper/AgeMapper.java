@@ -6,12 +6,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AgeMapper {
-    public AgeRangeDTO toDto(AgeRange ageRange) {
-        if (ageRange == null) {
-            return null;
-        }
-        AgeRangeDTO ageRangeDTO = new AgeRangeDTO();
-        ageRangeDTO.setRange(AgeRangeDTO.RangeEnum.fromValue(ageRange.name()));
-        return ageRangeDTO;
+  public AgeRangeDTO toDto(AgeRange ageRange) {
+    if (ageRange == null) {
+      return null;
     }
+      return new AgeRangeDTO(AgeRangeDTO.RangeEnum.fromValue(ageRange.name()));
+  }
 }

@@ -28,10 +28,7 @@ public class PurchaseController implements PurchasesApi {
 
   @Override
   public AgeRangeDTO getMoreFrequentAgeRange(LocalDateTime from, LocalDateTime to) {
-    DateRangeRequest dateRequest = DateRangeRequest.builder()
-            .startDate(from)
-            .endDate(to)
-            .build();
+    DateRangeRequest dateRequest = DateRangeRequest.builder().startDate(from).endDate(to).build();
     AgeRange buyersAgeRange = purchaseService.getBuyersAgeRange(dateRequest);
     return ageMapper.toDto(buyersAgeRange);
   }

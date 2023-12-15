@@ -8,16 +8,14 @@ import es.lareira.denodo.application.domain.model.requests.PurchaseDetailRequest
 import es.lareira.denodo.application.domain.validators.aspects.ValidDateRange;
 import es.lareira.denodo.application.ports.input.service.PurchaseService;
 import es.lareira.denodo.application.ports.output.repository.PurchaseRepository;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
-import java.util.Comparator;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -33,14 +31,13 @@ public class PurchaseServiceImpl implements PurchaseService {
 
   @Override
   public AgeRange getBuyersAgeRange(@ValidDateRange DateRangeRequest dateRangeRequest) {
-    return purchaseRepository.getBuyersAges(dateRangeRequest)
-            .stream()
-            .map(AgeRange::getAgeRange)
-            .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
-            .entrySet()
-            .stream()
-            .max(Map.Entry.comparingByValue())
-            .map(Map.Entry::getKey)
-            .orElseThrow(NoPurchasesFoundException::new);
+    return purchaseRepository.getBuyersAges(dateRangeRequest).stream()
+        .map(AgeRange::getAgeRange)
+        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+        .entrySet()
+        .stream()
+        .max(Map.Entry.comparingByValue())
+        .map(Map.Entry::getKey)
+        .orElseThrow(NoPurchasesFoundException::new);
   }
 }

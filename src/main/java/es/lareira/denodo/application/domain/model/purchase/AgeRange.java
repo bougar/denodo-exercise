@@ -1,6 +1,5 @@
 package es.lareira.denodo.application.domain.model.purchase;
 
-
 import java.util.Arrays;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
@@ -31,8 +30,8 @@ public enum AgeRange {
 
   public static AgeRange getAgeRange(int age) {
     return Arrays.stream(values())
-            .filter(ageRange -> ageRange.isInRange(age))
-            .findFirst()
-            .orElse(AGE_RANGE_UNKNOWN);
+        .filter(ageRange -> ageRange.isInRange(age))
+        .findFirst()
+        .orElse(AGE_RANGE_UNKNOWN);
   }
 }
