@@ -194,6 +194,10 @@ The following article discusses the subject in more depth:
 
 * [Why Good Developers Write Bad Unit Tests](https://mtlynch.io/good-developers-bad-tests/)
 
+### Integration Testing
+Integration tests allows the test of REST API endpoints by using spring-boot-test framework with MockMvc. With this
+approach it is possible to test the API endpoints without the need of starting the application.
+
 ### Test Mutation
 [PIT](https://pitest.org/) framework is used to introduce mutations testing on the project. As said
 on the official project web page:
@@ -241,8 +245,10 @@ In order to help developers to trace requests through the system, I have decided
 library to generate a unique trace id for each request. This trace id will be included in the response headers:
 * `X-B3-TraceId`
 * `X-B3-SpanId`
-  This traces will help developers to trace requests through a distributed system. It is also possible to use
-  some tools like [Zipkin](https://zipkin.io/) to visualize the traces.
+This traces will help developers to trace requests through a distributed system. It is also possible to use
+some tools like [Zipkin](https://zipkin.io/) to visualize the traces.
+
+![b3-trace-example](docs/images/b3-headers.png)
 
 # Testing the Application
 ## Run the application
