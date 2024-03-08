@@ -40,7 +40,7 @@ public class RequestTraceInformationFilter implements Filter {
             .map(Tracer::currentSpan)
             .map(Span::context)
             .map(TraceContext::spanId)
-            .orElse(StringUtils.EMPTY);
+            .orElse(StringUtils.E
     httpServletResponse.addHeader(TRACE_ID_HEADER, traceId);
     httpServletResponse.addHeader(SPAN_ID_HEADER, spanId);
     filterChain.doFilter(servletRequest, servletResponse);
